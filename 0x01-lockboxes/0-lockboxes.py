@@ -1,12 +1,16 @@
 #!/usr/bin/python3
-"""A python module that determines if all boxes can be opened
-   from a list of lists
-"""
+"""Determines if all boxes can be opened from a list of lists."""
 
 
 def canUnlockAll(boxes=[]):
-    """A function that returns True of all box in
-    boxes can be opend
+    """Determines if all boxes can be opened.
+
+    Args:
+        boxes (list of list): A list of lists representing the boxes and
+        their keys.
+
+    Returns:
+        bool: True if all boxes can be opened, False otherwise.
     """
     if not boxes:
         return False
@@ -25,18 +29,18 @@ def canUnlockAll(boxes=[]):
 
 if __name__ == '__main__':
     boxes = [
-                [1, 3],
-                [2],
-                [3, 0],
-                [1, 2, 3],
-            ]
-    print(unlockBoxes(boxes))
+        [1, 3],
+        [2],
+        [3, 0],
+        [1, 2, 3],
+    ]
+    print(canUnlockAll(boxes))
 
     boxes = [[1], [2], [3], [4], []]
     print(canUnlockAll(boxes))
 
     boxes = [[1, 4, 6], [2], [0, 4, 1], [5, 6, 2], [3], [4, 1], [6]]
-    print(unlockBoxes(boxes))
+    print(canUnlockAll(boxes))
 
     boxes = [[1, 4], [2], [0, 4, 1], [3], [], [4, 1], [5, 6]]
-    print(unlockBoxes(boxes))
+    print(canUnlockAll(boxes))
