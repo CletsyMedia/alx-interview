@@ -25,8 +25,11 @@ def minOperations(n):
         raise TypeError("n must be an integer")
 
     operations = 0
-    for iterator in range(2, n + 1):
-        while (n % iterator) == 0:
-            n //= iterator
+    iterator = 2
+    while (iterator <= n):
+        if not (n % iterator):
+            n = int(n / iterator)
             operations += iterator
+            iterator = 1
+        iterator += 1
     return operations
