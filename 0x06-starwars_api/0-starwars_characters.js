@@ -25,20 +25,45 @@ request(url, (error, response, body) => {
   const filmData = JSON.parse(body);
   const characters = filmData.characters;
 
-  characters.forEach(characterUrl => {
+  // Helper function to fetch character data
+  const fetchCharacter = (characterUrl, callback) => {
     request(characterUrl, (error, response, body) => {
       if (error) {
         console.error('Error:', error);
+        callback(error);
         return;
       }
 
       if (response.statusCode !== 200) {
         console.error('Unexpected status code:', response.statusCode);
+        callback(new Error(`Unexpected status code: ${response.statusCode}`));
         return;
       }
 
       const characterData = JSON.parse(body);
-      console.log(characterData.name);
+      callback(null, characterData.name);
     });
-  });
+  };
+
+  // Fetch and display characters sequentially
+  const displayCharacters = async () => {
+    for (const characterUrl of characters) {
+      try {
+        const characterName = await new Promise((resolve, reject) => {
+          fetchCharacter(characterUrl, (error, name) => {
+            if (error) {
+              reject(error);
+            } else {
+              resolve(name);
+            }
+          });
+        });
+        console.log(characterName);
+      } catch (error) {
+        console.error('Error fetching character:', error);
+      }
+    }
+  };
+
+  displayCharacters();
 });
