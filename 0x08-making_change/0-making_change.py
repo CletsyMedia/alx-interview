@@ -1,16 +1,18 @@
 #!/usr/bin/python3
+"""Making change O(n)"""
+
 
 def makeChange(coins, total):
-    if total < 0:
-        return 0  # No need to make any change for a negative total
-    if total == 0:
-        return 0  # No coins needed for total of 0
+    """Clasic Bottom-Up dynamic programming"""
+    temp_value = 0
+    coins.sort(reverse=True)
 
-    dp = [float('inf')] * (total + 1)
-    dp[0] = 0  # 0 coins needed for amount 0
+    if total < 0:
+        return 0
 
     for coin in coins:
-        for amount in range(coin, total + 1):
-            dp[amount] = min(dp[amount], dp[amount - coin] + 1)
+        if total % coin <= total:
+            temp_value += total // coin
+            total = total % coin
 
-    return dp[total] if dp[total] != float('inf') else -1
+    return temp_value if total == 0 else -1
